@@ -61,7 +61,7 @@ A note on what MPS is, just to have it right here at the beginning.  MPS is a ma
 
 One advantage that MPS has over the naive collectors (or Boehm) that most young language use is that it has short pause times.  It's apparently tuned to run incrementally in short increments. 
 
-Another advantage it has over the enterprise collectors from the JVM or .Net is that it the code you write doesn't need explicit write barriers or read barriers. That makes your code more straightforward and probably faster. When the system needs a barrier it temporarily locks a page or stops all the threads.  I know that sounds scary, but it works. 
+Another advantage it has over the enterprise collectors from the JVM or .Net is that it the code you write doesn't need explicit write barriers or read barriers. That makes your code more straightforward and probably faster. When the system needs a barrier it temporarily locks a page or stops all the threads.  I know that sounds scary, but it works. And OS level page dirty bits replace card marking or dirty object write bariers.
 
 Unlike garbage collectors for the JVM, you can send different objects to different kinds of garbage collection pools within the same program and they will interoperate. You can pick the garbage collection algorithm and settings appropriate to given object or subsystem individually.
 

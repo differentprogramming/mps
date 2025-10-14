@@ -37,7 +37,7 @@ programs in your shiny new language to be competitive with programs written in a
 Sure, every year computers get faster, and your interpreter that's 100 times slower than an optimizing compiler is still useful because your 
 computer is 100 times faster than one 20 years ago... But no engineer thinks that's fun.
 
-MPS doesn't currently support 32 bit arm, so that simplifies my targets which will be 64 bit arm and 64 bit x86.  If the project goes somewhere, then maybe there will eventually be RISK V support. 
+MPS doesn't currently support 32 bit arm, so that simplifies my targets which will be 64 bit arm and 64 bit x86.  If the project goes somewhere, then maybe there will eventually be RISC-V support. 
 
 =============================
 

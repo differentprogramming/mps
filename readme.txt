@@ -26,7 +26,9 @@ and once they're implemented, they can be accessed through a high level language
 I'm hoping I can get other programming language nerds excited and we can implement features and libraries etc.
 
 This will be useful general purpose language. I'm looking forward to using it. But since it is designed as the most comprehensive engineering tool for specifying every possible detail of how programs can work, including language decisions that would be totally unimportant details to a user,
-it is the opposite of languages designed to control complexity in organizations.  You will have the maximum possible rope with which to hang yourself, on purpose.
+it is the opposite of languages designed to control complexity in organizations.  You will have the maximum possible rope with which to hang yourself, on purpose. 
+
+I intend to make the complexity of the language more tractable by writing a custom editor for it, so that you can click on any symbol, project or file and bring up a property sheet with all of the options the compiler has for it... You will be able to specify how your language works by filling out forms rather than needing to learn commands that describe all of the options.  This isn't the place for detail, I just added this so that maybe it will sound a bit less scary.
 
 To be clear, writing computer languages is easy and doesn't need a system like this, as long as you don't need your
 programs to be optimized. Writing an interpreter that implements any semantics is trivial.  But what fun is that?  You want

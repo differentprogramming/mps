@@ -59,6 +59,10 @@ The ability to build MPS without support for compacting, so that the check for w
 
 A note on what MPS is, just to have it right here at the beginning.  MPS is a mature garbage collection system.  Since its roots are old, it may not be perfectly tuned for large memory spaces, but I do know of one supercomputer project that relies on it. Clasp is a Common Lisp with an LLVM backend that's used for molecular design that uses MPS as its garbage collector. 
 
+One advantage that MPS has over the naive collectors (or Boehm) that most young language use is that it has short pause times.  It's apparently tuned to run incrementally in short increments. 
+
+Another advantage it has over the enterprise collectors from the JVM or .Net is that it the code you write doesn't need explicit write barriers or read barriers. That makes your code more straightforward and probably faster. When the system needs a barrier it temporarily locks a page or stops all the threads.  I know that sounds scary, but it works. 
+
 Unlike garbage collectors for the JVM, you can send different objects to different kinds of garbage collection pools within the same program and they will interoperate. You can pick the garbage collection algorithm and settings appropriate to given object or subsystem individually.
 
 And the system is designed to work with C and C++ programs.  Since it's a mostly exact collector, it's not seamless like the Boehm-Demers-Weiser collector.  If you want your objects collected, you have to supply routines that show the system how to scan each object.  But the stacks are scanned in a conservative collector mode. If an object is refered to from the stack or from a register, then that object is pinnned and will not be compacted.

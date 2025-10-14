@@ -45,7 +45,7 @@ So what changes am I planning for MPS?
 
 I already have one ready to fold in.  A stack scanner that accepts nan-boxed pointers that are encoded in a somewhat different way than MPS 
 is already set up for.   Given the way user space pointers work in modern operating systems, the one's complement of a 64 bit user space pointer is a 
-NaN and there couldn't be an easier, faster way to mask/unmask such a pointer.  More on that later.  There's more details (I also flip the high bit for reasons) and this all about details.
+NaN and there couldn't be an easier, faster way to mask/unmask such a pointer.
 
 Planned extensions:
 

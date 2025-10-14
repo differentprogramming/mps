@@ -37,22 +37,33 @@ programs in your shiny new language to be competitive with programs written in a
 Sure, every year computers get faster, and your interpreter that's 100 times slower than an optimizing compiler is still useful because your 
 computer is 100 times faster than one 20 years ago... But no engineer thinks that's fun.
 
+MPS doesn't currently support 32 bit arm, so that simplifies my targets which will be 64 bit arm and 64 bit x86.  If the project goes somewhere, then maybe there will eventually be RISK V support. 
+
 =============================
 
 So what changes am I planning for MPS? 
 
 I already have one ready to fold in.  A stack scanner that accepts nan-boxed pointers that are encoded in a somewhat different way than MPS 
-is already set up for.   Given the way user space pointers work in modern operating systems, the one's complement of a 64 bit pointer is a 
+is already set up for.   Given the way user space pointers work in modern operating systems, the one's complement of a 64 bit user space pointer is a 
 NaN and there couldn't be an easier, faster way to mask/unmask such a pointer.  More on that later.  There's more details (I also flip the high bit for reasons) and this all about details.
 
 Planned extensions:
 
-Pools for objects that will only accessed and collected from a single thread so that in the same program the overhead associated for cross thread synchronization within the GC isn't paid for objects that never leave their thread.
+Pools for objects that will only be accessed and collected from a single thread so that in the same program the overhead associated for cross thread synchronization within the GC isn't paid for objects that never leave their thread while the main GC still works across threads.
 
 Allocators for objects that can be extended as much as needed (until you run out of memory) without ever having to be moved - accomplished by reserving space in the huge 47 bit space we have without committing pages until needed.  More than just calls to mmap or VirtualAlloc if these collections are to be scanned by the GC. 
 
 The ability to build MPS without support for compacting, so that the check for whether a new object got invalidated by compaction before being committed can be optimized out in that case.  To be clear I will write this code so that CES can be built both ways.  Google thought that it made sense for go to have a non-compacting collector and I want you to be able to make the same choice without having to pay the cost for a feature you're not using.  
 
+=============================
+
+A note on what MPS is, just to have it right here at the beginning.  MPS is a mature garbage collection system.  Since its roots are old, it may not be perfectly tuned for large memory spaces, but I do know of one supercomputer project that relies on it. Clasp is a Common Lisp with an LLVM backend that's used for Molecular design that uses MPS as its garbage collector. 
+
+Unlike garbage collectors for the JVM, you can send different objects to different kinds of garbage collection pools within the same program and they will interoperate. You can pick the garbage collection algorithm and settings appropriate to given object or subsystem individually.
+
+And the system is designed to work with C and C++ programs.  Since it's a mostly exact collector, it's not seamless like the Boehm-Demers-Weiser collector.  If you want your objects collected, you have to supply routines that show the system how to scan each object.  But the stacks are scanned in a conservative collector mode. If an object is refered to from the stack or from a register, then that object is pinnned and will not be compacted.
+
+The ability of MPS (and of the language I'm writing) to interop is important.
 
 =============================
 Memory Pool System Kit Readme

@@ -65,7 +65,7 @@ Another advantage it has over the enterprise collectors from the JVM or .Net is 
 
 Unlike garbage collectors for the JVM, you can send different objects to different kinds of garbage collection pools within the same program and they will interoperate. You can pick the garbage collection algorithm and settings appropriate to given object or subsystem individually.
 
-And the system is designed to work with C and C++ programs.  Since it's a mostly exact collector, it's not seamless like the Boehm-Demers-Weiser collector.  If you want your objects collected, you have to supply routines that show the system how to scan each object.  But the stacks are scanned in a conservative collector mode. If an object is refered to from the stack or from a register, then that object is pinnned and will not be compacted.
+And the system is designed to work with C and C++ programs.  Since it's a mostly exact collector, it's not seamless like the Boehm-Demers-Weiser collector.  If you want your objects collected, you have to supply routines that show the system how to scan each object.  But the stacks are scanned in a conservative collector mode. If an object is refered to from the stack or from a register, then that object is pinned and will not be compacted.
 
 The ability of MPS (and of the language I'm writing) to interop is important.
 

@@ -16,7 +16,7 @@ It is going to be a high level language that has compiler primitives covering em
 components so that it can embody any computer language without having to unnecessarily delve into low level details. 
 
 Instead lowering your program into a low level IR, you just convert it to this language - where the details of what can be a 
-variable, parameter, function etc. how they can be accessed, called, specialized, visibility across threads etc. can be specified
+variable, parameter, function etc. how they can be accessed, called, specialized, visibility across threads, how math works etc. can be specified
 into every excruciating detail I thought might be useful to someone sometime.
 
 Since the purpose is to enable unusual features and unusual optimizations you CAN and may need to get to a low level 

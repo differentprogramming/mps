@@ -25,16 +25,14 @@ and once they're implemented, they can be accessed through a high level language
 
 I'm hoping I can get other programming language nerds excited and we can implement features and libraries etc.
 
-Note, this system will be useful general purpose language.  But since it's designed as the most comprehensive engineering tool 
-it is the opposite of languages designed to control complexity in organizations.  
+This will be useful general purpose language. I'm looking forward to using it. But since it is designed as the most comprehensive engineering tool for specifying every possible detail of how programs can work, including language decisions that would be totally unimportant details to a user,
+it is the opposite of languages designed to control complexity in organizations.  You will have the maximum possible rope with which to hang yourself, on purpose.
 
-You have the maximum possible rope with which to hang yourself, on purpose.
-
-Now let me be clear, writing computer languages is easy and doesn't need a system like this, as long as you don't need your
+To be clear, writing computer languages is easy and doesn't need a system like this, as long as you don't need your
 programs to be optimized. Writing an interpreter that implements any semantics is trivial.  But what fun is that?  You want
 programs in your shiny new language to be competitive with programs written in anything.
 
-Sure, every year computers get faster, and your interpreter that's 100 times slower than an optimizing compiler is still useful because your 
+Every year computers get faster, and your interpreter that's 100 times slower than an optimizing compiler is still useful because your 
 computer is 100 times faster than one 20 years ago... But no engineer thinks that's fun.
 
 MPS doesn't currently support 32 bit arm, so that simplifies my targets which will be 64 bit arm and 64 bit x86.  If the project goes somewhere, then maybe there will eventually be RISC-V support. 
@@ -61,7 +59,7 @@ A note on what MPS is, just to have it right here at the beginning.  MPS is a ma
 
 One advantage that MPS has over the naive collectors (or Boehm) that most young language use is that it has short pause times.  It's apparently tuned to run incrementally in short increments. Also, it is a generational collector. 
 
-Another advantage it has over the enterprise collectors from the JVM or .Net is that it the code you write doesn't need explicit write barriers or read barriers or safe points. That makes your code more straightforward and probably faster. When the system needs a barrier it temporarily locks a page or stops all the threads.  I know that sounds scary, but it works. And OS level page dirty bits replace card marking or dirty object write barriers.
+Another advantage it has over the enterprise collectors from the JVM or .Net is that it the code you generate doesn't need explicit write barriers or read barriers or safe points. That makes your code more straightforward and probably faster. When the system needs a barrier it temporarily locks a page or stops all the threads.  I know that sounds scary, but it works. And OS level page dirty bits replace card marking or dirty object write barriers.
 
 Unlike garbage collectors for the JVM, you can send different objects to different kinds of garbage collection pools within the same program and they will interoperate. You can pick the garbage collection algorithm and settings appropriate to given object or subsystem individually.
 

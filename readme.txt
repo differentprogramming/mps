@@ -57,7 +57,7 @@ The ability to build MPS without support for compacting, so that the check for w
 
 =============================
 
-A note on what MPS is, just to have it right here at the beginning.  MPS is a mature garbage collection system.  Since its roots are old, it may not be perfectly tuned for large memory spaces, but I do know of one supercomputer project that relies on it. Clasp is a Common Lisp with an LLVM backend that's used for Molecular design that uses MPS as its garbage collector. 
+A note on what MPS is, just to have it right here at the beginning.  MPS is a mature garbage collection system.  Since its roots are old, it may not be perfectly tuned for large memory spaces, but I do know of one supercomputer project that relies on it. Clasp is a Common Lisp with an LLVM backend that's used for molecular design that uses MPS as its garbage collector. 
 
 Unlike garbage collectors for the JVM, you can send different objects to different kinds of garbage collection pools within the same program and they will interoperate. You can pick the garbage collection algorithm and settings appropriate to given object or subsystem individually.
 

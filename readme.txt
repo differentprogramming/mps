@@ -59,7 +59,7 @@ The ability to build MPS without support for compacting, so that the check for w
 
 A note on what MPS is, just to have it right here at the beginning.  MPS is a mature garbage collection system.  Since its roots are old, it may not be perfectly tuned for large memory spaces, but I do know of one supercomputer project that relies on it. Clasp is a Common Lisp with an LLVM backend that's used for molecular design that uses MPS as its garbage collector. 
 
-One advantage that MPS has over the naive collectors (or Boehm) that most young language use is that it has short pause times.  It's apparently tuned to run incrementally in short increments. 
+One advantage that MPS has over the naive collectors (or Boehm) that most young language use is that it has short pause times.  It's apparently tuned to run incrementally in short increments. Also, it is a generational collector. 
 
 Another advantage it has over the enterprise collectors from the JVM or .Net is that it the code you write doesn't need explicit write barriers or read barriers. That makes your code more straightforward and probably faster. When the system needs a barrier it temporarily locks a page or stops all the threads.  I know that sounds scary, but it works. And OS level page dirty bits replace card marking or dirty object write barriers.
 

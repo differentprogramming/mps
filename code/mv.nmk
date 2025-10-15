@@ -22,7 +22,10 @@ LINKER = link
 # which causes the linker step to fail when building the DLL, mpsdy.dll.
 #
 # /W4 /WX might be enabled by clients <design/config/#.warning.impl>.
-CFLAGSCOMMONPRE = $(CFLAGSCOMMONPRE) /D_CRT_SECURE_NO_WARNINGS /W4 /WX /Gs /Fd$(PFM)\$(VARIETY)
+# /wd5287 added as a workaround for the compiler bug here 
+# https://developercommunity.visualstudio.com/t/warning-C5287:-operands-are-different-e/10877942
+# Wd4100 because unreferenced parameters are not errors
+CFLAGSCOMMONPRE = $(CFLAGSCOMMONPRE) /D_CRT_SECURE_NO_WARNINGS /W4 /WX /wd5287 /wd4100 /Gs /Fd$(PFM)\$(VARIETY)
 LIBFLAGSCOMMON = $(LIBFLAGSCOMMON) /nologo
 
 # /MD means compile for multi-threaded environment with separate C library DLL.

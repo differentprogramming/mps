@@ -42,6 +42,87 @@
     }                                                   \
   } MPS_SCAN_END(ss);
 
+#define MPS_CUSTOM_SCAN_AREA(is_nan,is_naked) \
+  MPS_SCAN_BEGIN(ss) {                                  \
+    mps_word_t *p = base;                               \
+    while (p < (mps_word_t *)limit) {                   \
+      mps_word_t tag_bits = *p;                         \
+      const _Bool b_is_naked = is_naked;                \
+      const _Bool b_is_nan = b_is_naked?0:(is_nan);     \
+      if (b_is_nan) tag_bits = 0x7fffffffffffffffull^tag_bits;               \
+      if (b_is_naked||b_is_nan) {                       \
+        mps_addr_t ref = (mps_addr_t)(tag_bits);        \
+        if (MPS_FIX1(ss, ref)) {                        \
+          mps_res_t res = MPS_FIX2(ss, &ref);           \
+          if (res != MPS_RES_OK)                        \
+            return res;                                 \
+          *p = b_is_naked?(mps_word_t)ref:(0x7fffffffffffffffull^(mps_word_t)ref);\
+        }                                               \
+      }                                                 \
+      ++p;                                              \
+    }                                                   \
+  } MPS_SCAN_END(ss);
+
+/* mps_custom_scam -- scan stack containing nan-boxed references and raw pointers
+ *
+ * Like mps_scan_area_tagged, except references whose masked bits are
+ * zero are fixed in addition positive NaNs.
+ * In this case the masked bits are the exponent of a 64 bit ieee float
+ * as well as the bits above the 47 bits that are significant in current
+ * operating systems.
+ *
+ * if these bits are all on, and the sign bit is off then those bits (excluding
+ * sign bit) will be complemented to generate a trial address.
+ *
+ * Despite the extra cost in the mutator, the sign bit is flipped so that negative
+ * 64 bit integers with maginitudes under 140 trillian and pairs of 32 bit values
+ * where the first value is a negative integer with a magnitude under 32000
+ * won't all alias to being addresses.
+ * This way false positives will be much more rare.
+ *
+ * This scanner is most useful for ambiguously scanning the stack and
+ * registers when using an optimising C compiler and nan-boxing on
+ * references, since the compiler is likely to leave unboxed
+ * addresses of objects around which must not be ignored.
+ */
+
+mps_res_t mps_custom_scan_nan_or_untagged(mps_ss_t ss,
+                                       void *base, void *limit,
+                                       void *closure)
+{
+
+    MPS_CUSTOM_SCAN_AREA((tag_bits & 0xffff800000000000ull) == 0x7fff800000000000ull, (tag_bits & 0xffff800000000000ull) == 0);
+
+    return MPS_RES_OK;
+}
+
+/* mps_scan_area_tagged -- scan area selecting by tag
+ *
+ * Like mps_scan_area_masked, except only containing nan_boxed references
+ *
+ * In this case the masked bits are the exponent of a 64 bit ieee float
+ * as well as the bits above the 47 bits that are significant in current
+ * operating systems.
+ *
+ * if these bits are all on, and the sign bit is off then those bits (excluding
+ * sign bit) will be complemented to generate a trial address.
+ *
+ * Despite the extra cost in the mutator, the sign bit is flipped so that negative
+ * 64 bit integers with maginitudes under 140 trillian and pairs of 32 bit values
+ * where the first value is a negative integer with a magnitude under 32000
+ * won't all alias to being addresses.
+ * This way false positives will be much more rare.
+ */
+
+mps_res_t mps_custom_scan_area_nan(mps_ss_t ss,
+                               void *base, void *limit,
+                               void *closure)
+{
+
+  MPS_CUSTOM_SCAN_AREA((tag_bits & 0xffff800000000000ull) == 0x7fff800000000000ull, 0);
+
+  return MPS_RES_OK;
+}
 
 /* mps_scan_area -- scan contiguous area of references
  *

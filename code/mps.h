@@ -812,6 +812,8 @@ extern mps_res_t mps_scan_area(mps_ss_t, void *, void *, void *);
 extern mps_res_t mps_scan_area_masked(mps_ss_t, void *, void *, void *);
 extern mps_res_t mps_scan_area_tagged(mps_ss_t, void *, void *, void *);
 extern mps_res_t mps_scan_area_tagged_or_zero(mps_ss_t, void *, void *, void *);
+extern mps_res_t mps_custom_scan_nan_or_untagged(mps_ss_t, void *, void *, void *);
+extern mps_res_t mps_custom_scan_area_nan(mps_ss_t, void *, void *, void *);
 
 #define MPS_SCAN_BEGIN(ss) \
   MPS_BEGIN \

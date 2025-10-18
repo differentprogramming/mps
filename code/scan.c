@@ -22,6 +22,8 @@
 #pragma warning( disable : 4127 )
 #endif
 
+#define UNUSED_(x) (void)(x)
+
 
 #define MPS_SCAN_AREA(test) \
   MPS_SCAN_BEGIN(ss) {                                  \
@@ -90,7 +92,7 @@ mps_res_t mps_custom_scan_nan_or_untagged(mps_ss_t ss,
                                        void *base, void *limit,
                                        void *closure)
 {
-
+    UNUSED_(closure);
     MPS_CUSTOM_SCAN_AREA((tag_bits & 0xffff800000000000ull) == 0x7fff800000000000ull, (tag_bits & 0xffff800000000000ull) == 0);
 
     return MPS_RES_OK;
@@ -118,7 +120,7 @@ mps_res_t mps_custom_scan_area_nan(mps_ss_t ss,
                                void *base, void *limit,
                                void *closure)
 {
-
+  UNUSED_(closure);
   MPS_CUSTOM_SCAN_AREA((tag_bits & 0xffff800000000000ull) == 0x7fff800000000000ull, 0);
 
   return MPS_RES_OK;

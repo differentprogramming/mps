@@ -602,6 +602,8 @@ static Res VMArenaCreate(Arena *arenaReturn, ArgList args)
   mps_arg_s arg;
   char vmParams[VMParamSize];
 
+  vmParams[0]=0; /* suppress warning */
+
   AVER(arenaReturn != NULL);
   AVERT(ArgList, args);
 
